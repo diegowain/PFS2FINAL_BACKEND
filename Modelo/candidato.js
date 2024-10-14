@@ -80,7 +80,7 @@ export default class Candidato{
         return candidato;
     }
 
-    async consultarCargo(cpf){
+    async consultarCpf(cpf){
         const candDAO = new CandidatoDAO();
         const candidato = await candDAO.consultarCpf(cpf);
         return candidato;

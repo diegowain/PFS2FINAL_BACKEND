@@ -9,6 +9,6 @@ rotaCandidato.post('/', candidatoCtrl.gravar)
 .put('/',candidatoCtrl.atualizar)
 .delete('/',candidatoCtrl.excluir)
 .get('/', candidatoCtrl.consultar)
-.get('/:cpf', candidatoCtrl.consultarPeloCPF);
+.get('/:cpf', candidatoCtrl.consultarCpf);
 
 export default rotaCandidato;

@@ -9,7 +9,7 @@ export default async function conectar(){
             host: 'localhost',
             user: 'root', //jamais faça isso
             password:'',  //never, nunca, jamais
-            database: 'pfs',
+            database: 'ful',
             connectionLimit: 50,
             maxIdle: 30, // max idle connections, the default value is the same as `connectionLimit`
             idleTimeout: 60000, // idle connections timeout, in milliseconds, the default value 60000

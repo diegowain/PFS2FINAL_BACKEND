@@ -134,7 +134,7 @@ export default class CandidatoCtrl{
         if(requisicao.method === "GET"){
             const candidato = new Candidato();
             //método assíncrono que recupera os clientes do banco dados
-            candidato.consultar('').then((clientes)=>{
+            candidato.consultar('').then((candidato)=>{
                     resposta.status(200).json({
                         status:true,
                         listaCandidato:candidato
@@ -157,7 +157,7 @@ export default class CandidatoCtrl{
 
     //alguém poderá fazer a seguinte requisição:
     //GET http://localhost:3000/clientes/111.111.111-11
-    consultarPeloCPF(requisicao, resposta){
+    consultarCpf(requisicao, resposta){
         resposta.type("application/json");
         
         const cpf = requisicao.params['cpf'];
@@ -165,7 +165,7 @@ export default class CandidatoCtrl{
         if(requisicao.method === "GET"){
             const candidato = new Candidato();
             //método assíncrono que recupera os clientes do banco dados
-            candidato.consultarCPF(cpf).then((candidato)=>{
+            candidato.consultarCpf(cpf).then((candidato)=>{
                     resposta.status(200).json({
                         status:true,
                         listaCandidato:candidato

@@ -1,96 +1,88 @@
+
 import CandidatoVagaDAO from "../Persistencia/CandidatoVagaDAO.js";
+
 export default class CandidatoVaga {
-    #dataInscricao;
-    #horarioInscricao;
-    #cpf;
-    
-    #codigo;
 
-    constructor(dataInscricao, horarioInscricao, cpf, codigo) {
-        this.#dataInscricao = dataInscricao;
-        this.#horarioInscricao = horarioInscricao;
-        this.#cpf = cpf;
-        this.#codigo = codigo;
-        
-  
+   #data;
+   #horario;
+   #candidatoCpf;  // chave estrangeira
+   #vagaCodigo;    // chave estrangeira
+
+    constructor(data, horario, candidatoCpf, vagaCodigo) {
+        this.#data = data;
+        this.#horario = horario;
+        this.#candidatoCpf = candidatoCpf;
+        this.#vagaCodigo = vagaCodigo;
     }
 
-    // Métodos de acesso (get) e modificação (set)
-
-    // Código
-
-    // Código do Cliente
-    get dataInscricao() {
-        return this.#dataInscricao;
+    get data() {
+        return this.#data;
     }
 
-    set dataInscricao(novaData) {
-        this.#dataInscricao = novaData;
-        
+    set data(novaData) {
+        this.#data = novaData;
     }
 
-    // Data
-    get horarioInscricao() {
-        return this.#horarioInscricao;
+    get horario() {
+        return this.#horario;
     }
 
-    set horarioInscricao(novoHorario) {
-        this.#horarioInscricao = novoHorario;
+    set horario(novoHorario) {
+        this.#horario = novoHorario;
     }
 
-    // Total do Pedido
-    get cpf() {
-        return this.#cpf;
+    get candidatoCpf() {
+        return this.#candidatoCpf;
     }
 
-    set cpf(novoTotal) {
-        this.#cpf = novoCpf;
+    set candidatoCpf(novoCpf) {
+        this.#candidatoCpf = novoCpf;
     }
 
-    get codigo() {
-        return this.#codigo;
+    get vagaCodigo() {
+        return this.#vagaCodigo;
     }
 
-    set codigo(novoCodigo) {
-        if (novoCodigo === "" || typeof novoCodigo !== "number") {
-            console.log("Formato de dado inválido");
-        } else {
-            this.#codigo = novoCodigo;
-        }
+    set vagaCodigo(novoCodigo) {
+        this.#vagaCodigo = novoCodigo;
     }
-    // Produtos
 
-    // JSON
     toJSON() {
         return {
-            'dataInscricao': this.dataInscricao,
-            'horarioInscricao': this. #horarioInscricao,
-            'cpf': this.cpf,
-            'codigo': this.#codigo
-
-
+            "data": this.#data,
+            "horario": this.#horario,
+            "candidatoCpf": this.#candidatoCpf,
+            "vagaCodigo": this.#vagaCodigo
         };
     }
 
+    // Gravar nova associação
     async gravar() {
-        const candidatovagaDAO = new CandidatoVagaDAO();
-        this.codigo = await candidatovagaDAO.gravar(this);
+        const candidatoVagaDAO = new CandidatoVagaDAO();
+        await candidatoVagaDAO.incluir(this);
     }
 
+    // Atualizar associação existente
     async atualizar() {
-        const candidatovagaDAO = new CandidatoVagaDAO();
-        await candidatovagaDAO.alterar(this);
+        const candidatoVagaDAO = new CandidatoVagaDAO();
+        await candidatoVagaDAO.alterar(this);
     }
 
-    async apagar() {
-        const candidatovagaDAO = new CandidatoVagaDAO();
-        await candidatovagaDAO.deletar(this);
+    // Remover associação do banco de dados
+    async removerDoBanco() {
+        const candidatoVagaDAO = new CandidatoVagaDAO();
+        await candidatoVagaDAO.excluir(this);
     }
 
-    async consultar(termoBusca) {
-        const candidatovagaDAO = new CandidatoVagaDAO();
-        const listaInscricoes = await candidatovagaDAO.consultar(termoBusca);
-        return listaInscricoes;
+    // Consultar todas as associações
+    async consultar(termo) {
+        const candidatoVagaDAO = new CandidatoVagaDAO();
+        return await candidatoVagaDAO.consultar(termo);
     }
-    
+
+    // Consultar associação específica pelo CPF e código da vaga
+    async consultarPeloCpfEVaga(cpf, codigo) {
+        const candidatoVagaDAO = new CandidatoVagaDAO();
+        return await candidatoVagaDAO.consultarPeloCpfEVaga(cpf, codigo);
+    }
 }

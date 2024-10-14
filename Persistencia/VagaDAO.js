@@ -8,9 +8,9 @@ export default class VagaDAO{
 
         if (vaga instanceof Vaga){
             const conexao = await conectar();
-            const sql="INSERT INTO vaga(cargo, salario,cidade,quantidade ) \
-                                           VALUES(?,?,?,?)";
-            const valores = [vaga.cargo, vaga.salario, vaga.cidade, vaga.quantidade];                                        
+            const sql="INSERT INTO vaga(codigo,cargo, salario,cidade,quantidade ) \
+                                           VALUES(?,?,?,?,?)";
+            const valores = [vaga.codigo,vaga.cargo, vaga.salario, vaga.cidade, vaga.quantidade];                                        
             await conexao.query(sql,valores);
             global.poolConexoes.releaseConnection(conexao);
         }
@@ -21,9 +21,9 @@ export default class VagaDAO{
         
         if (vaga instanceof Vaga){
             const conexao = await conectar();
-            const sql="UPDATE vaga SET salario=?, cidade = ?,quantidade = ? \
+            const sql="UPDATE vaga SET codigo=?, salario=?, cidade = ?,quantidade = ? \
                        WHERE cargo=?";
-            const valores = [vaga.cargo, vaga.salario, vaga.cidade, vaga.quantidade];                                        
+            const valores = [vaga.codigo, vaga.salario, vaga.cidade, vaga.quantidade, vaga.cargo];                                        
             await conexao.query(sql,valores);
             global.poolConexoes.releaseConnection(conexao);
         }
@@ -33,8 +33,8 @@ export default class VagaDAO{
 
         if (vaga instanceof Vaga){
             const conexao = await conectar();
-            const sql="DELETE FROM vaga WHERE cargo=?";
-            const valores = [vaga.cargo];                                        
+            const sql="DELETE FROM vaga WHERE codigo=?";
+            const valores = [vaga.codigo];                                        
             await conexao.query(sql,valores);
             global.poolConexoes.releaseConnection(conexao);
         } 
@@ -43,13 +43,13 @@ export default class VagaDAO{
 
     async consultar(termo){
         const conexao = await conectar();
-        const sql = "SELECT * FROM vaga WHERE cargo LIKE ?";
+        const sql = "SELECT * FROM vaga WHERE codigo LIKE ?";
         const valores = ['%' + termo + '%']
         const [rows] = await conexao.query(sql, valores);
         global.poolConexoes.releaseConnection(conexao);
         const listaVaga = [];
         for(const row of rows){
-            const vaga = new Vaga(row['cargo'],row['salario'],
+            const vaga = new Vaga(row['codigo'],row['cargo'],row['salario'],
             row['cidade'], row['quantidade']);
             listaVaga.push(vaga);
         }
@@ -64,7 +64,7 @@ export default class VagaDAO{
         global.poolConexoes.releaseConnection(conexao);
         const listaVaga = [];
         for(const row of rows){
-            const vaga = new Vaga(row['cargo'],row['salario'],
+            const vaga = new Vaga(row['cargo'],row['codigo'],row['salario'],
             row['cidade'], row['quantidade']);
             listaVaga.push(candidato);
         }

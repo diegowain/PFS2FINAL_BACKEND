@@ -2,18 +2,26 @@ import VagaDAO from "../Persistencia/VagaDAO.js"
 
 export default class Vaga{
 
-   #cargo;
+   #codigo;
+    #cargo;
    #salario;
    #cidade;
    #quantidade;
 
-    constructor(cargo, salario,cidade, quantidade){
+    constructor(codigo,cargo, salario,cidade, quantidade){
+        this.codigo = codigo;
         this.#cargo= cargo;
         this.#salario = salario;
         this.#cidade = cidade;
         this.#quantidade = quantidade;
     }
 
+    get codigo(){
+        return this.#codigo;
+    }
+    set codigo(novoCodigo){
+        this.#codigo = novoCodigo;  
+    }
     get cargo(){
         return this.#cargo;
     }
@@ -26,7 +34,7 @@ export default class Vaga{
         return this.#salario;
     }
 
-    set salario(novoNome){
+    set salario(novoSalario){
         //regra de negócio que impede que clientes existam com nomes vazios
             this.#salario = novoSalario;
     }
@@ -50,6 +58,7 @@ export default class Vaga{
 
     toJSON(){
         return {
+            "codigo": this.#codigo,
             "cargo"      : this.#cargo,
             "salario"     : this.#salario,
             "cidade" : this.#cidade,
